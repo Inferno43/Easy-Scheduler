@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1027120445508",
+    "firebase_url": "https://meeting-room-8b9ad.firebaseio.com",
+    "project_id": "meeting-room-8b9ad",
+    "storage_bucket": "meeting-room-8b9ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027120445508:android:e443bcb3cddd862c",
+        "android_client_info": {
+          "package_name": "com.ofs.ofmc.meetingroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027120445508-8ig8i96e9n2a535vt1b8885d6rm598ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuIv2BbzvoAi1FdQibN1jA0wZL7DzA5KI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

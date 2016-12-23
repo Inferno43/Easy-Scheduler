@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Easy Scheduler</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="username">UserName</string>
+    <string name="password">Password</string>
+    <string name="submit">Log In</string>
+    <string name="forgotpassword"> <u>Forgot Password ?</u></string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+
+
+    <string name="title_activity_home">Home </string>
+    <string name="title_activity_book_meetings">Book Meetings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="mr_alma_matter">MR Alma Matter</string>
+    <string name="mr_council">MR Council</string>
+    <string name="mr_matrix">MR Matrix</string>
+    <string name="mr_opera">MR Opera</string>
+    <string name="mr_phase3_c1">MR Phase3 C1</string>
+    <string name="mr_phase3_c2">MR Phase3 C2</string>
+    <string name="mr_phase3_c3">MR Phase3 C3</string>
+    <string name="mr_phase3_c4">MR Phase3 C4</string>
+    <string name="mr_phase3_c5">MR Phase3 C5</string>
+    <string name="mr_phase3_c6">MR Phase3 C6</string>
+    <string name="mr_phase3_c7">MR Phase3 C7</string>
+    <string name="mr_phase3_t1">MR Phase3 T1</string>
+    <string name="mr_phase3_t2">MR Phase3 T2</string>
+    <string name="title_activity_schedule_list">Schedule List</string>
+    <string name="tentative">Book as Tentative</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_profile">Profile</string>
+
+    <!--Settings-->
+    <string name="card_title_1">Choose Calendar View</string>
+    <string name="show_list">Show Schedule as List</string>
+    <string name="show_timeline">Show Schedule as Timeline</string>
+    <string name="card_title_2">Profile Info</string>
+    <string name="autofill">Autofill My Profile Info</string>
+    <string name="save">Save</string>
+
+
+    <!--menu-->
+    <string name="action_sort_location">Sort by Location</string>
+    <string name="action_sort_seating">Sort by Seating</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_settings">Settings</string>
+</resources>

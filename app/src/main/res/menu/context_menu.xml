@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/mr_alma_matter"
+        android:checkable="true"
+        android:id="@+id/alma"/>
+    <item android:title="@string/mr_council"
+        android:checkable="true"
+        android:id="@+id/council"/>
+    <item android:title="@string/mr_matrix"
+        android:checkable="true"
+        android:id="@+id/matrix"/>
+    <item android:title="@string/mr_opera"
+        android:checkable="true"
+        android:id="@+id/opera"/>
+    <item android:title="@string/mr_phase3_c1"
+        android:checkable="true"
+        android:id="@+id/C1"/>
+    <item android:title="@string/mr_phase3_c2"
+        android:checkable="true"
+        android:id="@+id/C2"/>
+    <item android:title="@string/mr_phase3_c3"
+        android:checkable="true"
+        android:id="@+id/C3"/>
+    <item android:title="@string/mr_phase3_c4"
+        android:checkable="true"
+        android:id="@+id/C4"/>
+    <item android:title="@string/mr_phase3_c5"
+        android:checkable="true"
+        android:id="@+id/C5"/>
+    <item android:title="@string/mr_phase3_c6"
+        android:checkable="true"
+        android:id="@+id/C6"/>
+    <item android:title="@string/mr_phase3_c7"
+        android:checkable="true"
+        android:id="@+id/C7"/>
+    <item android:title="@string/mr_phase3_t1"
+        android:checkable="true"
+        android:id="@+id/T1"/>
+    <item android:title="@string/mr_phase3_t2"
+        android:checkable="true"
+        android:id="@+id/T2"/>
+</menu>
