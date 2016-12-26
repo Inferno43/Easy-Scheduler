@@ -10,6 +10,13 @@ import android.os.Bundle;
 
 public interface AbstractActivityCallback {
 
+
+    /**
+     *  start new Activity implements in Base Activity
+     * @param claz
+     * @param addToBackStack
+     * @param args
+     */
     void replaceActivity(Class<? extends Activity> claz, boolean addToBackStack,
                          Bundle args);
 }

@@ -2,6 +2,8 @@ package com.ofs.ofmc.meetingroom.toolbox;
 
 /**
  * Created by saravana.subramanian on 12/13/16.
+ *
+ * For firebase notification
  */
 public class Config {
 

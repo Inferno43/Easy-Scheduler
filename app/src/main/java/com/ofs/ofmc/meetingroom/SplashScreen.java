@@ -12,6 +12,8 @@ import com.ofs.ofmc.meetingroom.login.LoginFragment;
 
 /**
  * Created by saravana.subramanian on 12/1/16.
+ *
+ * Splash screen fragment
  */
 
 public class SplashScreen extends BaseFragment{
@@ -39,7 +41,7 @@ public class SplashScreen extends BaseFragment{
 
 
             }
-        };mHandler.postDelayed(mRunnable,5000);
+        };mHandler.postDelayed(mRunnable,3000);
 
         return rootView;
     }

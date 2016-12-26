@@ -1,6 +1,10 @@
 package com.ofs.ofmc.meetingroom.meetings;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,7 +17,9 @@ import android.widget.TimePicker;
 import com.ofs.ofmc.meetingroom.BaseFragment;
 import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.model.Schedule;
+import com.ofs.ofmc.meetingroom.notifications.AlarmReceiver;
 import com.ofs.ofmc.meetingroom.toolbox.Constants;
+import com.ofs.ofmc.meetingroom.toolbox.Logr;
 import com.ofs.ofmc.meetingroom.toolbox.Utils;
 
 import java.util.Calendar;
@@ -92,6 +98,8 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
                                 }, new OnSuccess() {
                                     @Override
                                     public void onSuccess() {
+
+                                        scheduleAlarm(schedule);
                                         Snackbar.make(bookMeetingRoomView.getRootView(),"Successfully booked meeting room",Snackbar.LENGTH_LONG).show();
                                     }
                                 });
@@ -127,6 +135,27 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
         mTimePicker.show();
     }
 
+    public void scheduleAlarm(Schedule schedule) {
+        /**
+         * call broadcost reciver
+         */
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        intent.setAction("com.alarm.ACTION");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, intent,0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,Utils.dateVariant(new Date(schedule.getmDate()),'Y'));Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'Y'));
+        calendar.set(Calendar.MONTH,Utils.dateVariant(new Date(schedule.getmDate()),'M')-1);Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'M'));
+        calendar.set(Calendar.DAY_OF_MONTH,Utils.dateVariant(new Date(schedule.getmDate()),'D'));Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'D'));
+        calendar.set(Calendar.HOUR,Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));
+        calendar.set(Calendar.MINUTE,Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+
+        Logr.d(""+calendar.getTimeInMillis());
+        AlarmManager alarm = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-Constants._30SEC,0, pendingIntent);
+    }
     boolean isFieldsValid(Schedule schedule){
 
         Calendar startTime = Calendar.getInstance();

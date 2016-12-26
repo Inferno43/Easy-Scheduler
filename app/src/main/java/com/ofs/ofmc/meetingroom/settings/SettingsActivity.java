@@ -10,6 +10,9 @@ import android.view.View;
 import com.ofs.ofmc.meetingroom.BaseActivity;
 import com.ofs.ofmc.meetingroom.R;
 
+/**
+ * Settings Activity
+ */
 public class SettingsActivity extends BaseActivity {
 
     @Override

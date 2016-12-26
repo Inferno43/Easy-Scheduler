@@ -1,14 +1,11 @@
 package com.ofs.ofmc.meetingroom.home;
 
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -22,29 +19,34 @@ import android.view.MenuItem;
 
 import com.ofs.ofmc.meetingroom.BaseActivity;
 import com.ofs.ofmc.meetingroom.R;
+import com.ofs.ofmc.meetingroom.notifications.NotificationHandler;
 import com.ofs.ofmc.meetingroom.profile.ProfileActivity;
 import com.ofs.ofmc.meetingroom.settings.SettingsActivity;
-import com.ofs.ofmc.meetingroom.toolbox.NotificationPublisher;
 
-import java.util.ArrayList;
-import java.util.Date;
+/**
+ * Landing screen after login shows 3 calendar
+ */
 
 public class HomeActivity extends BaseActivity {
 
 
 
-
+    NotificationHandler nHandler;
     private String dateString;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private Context context;
+
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        nHandler = NotificationHandler.getInstance(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -57,9 +59,14 @@ public class HomeActivity extends BaseActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
-        //notification not working
-        NotificationPublisher alarm = new NotificationPublisher();
-        alarm.SetAlarmR(this);
+        //test notification
+//        mHandler = new Handler();
+//        Runnable mRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                nHandler.createSimpleNotification(context);
+//            }
+//        };mHandler.postDelayed(mRunnable,5000);
 
     }
 

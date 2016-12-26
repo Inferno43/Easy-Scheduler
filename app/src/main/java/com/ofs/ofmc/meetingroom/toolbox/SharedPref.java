@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 /**
  * Created by saravana.subramanian on 12/19/16.
+ *
+ * Shared preference class to store app information and settings
  */
 
 public class SharedPref {

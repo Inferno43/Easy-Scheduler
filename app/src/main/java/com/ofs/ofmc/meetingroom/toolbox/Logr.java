@@ -8,6 +8,8 @@ import com.ofs.ofmc.meetingroom.BuildConfig;
 
 /**
  * Created by saravana.subramanian on 11/30/16.
+ *
+ * Simplified logger to use across the app
  */
 
 public final class Logr {

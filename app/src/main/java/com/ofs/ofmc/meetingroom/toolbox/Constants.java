@@ -2,6 +2,8 @@ package com.ofs.ofmc.meetingroom.toolbox;
 
 /**
  * Created by saravana.subramanian on 11/30/16.
+ *
+ * Contains constants used across the app
  */
 public class Constants {
     private static Constants ourInstance = new Constants();
@@ -43,4 +45,8 @@ public class Constants {
     public static String EMPLOYEE_DESIGNATION = "employeeDesignation";
     public static String EMPLOYEE_TEAM = "employeeTeam";
     public static String EMPLOYEE_PHASE = "employeePhase";
+
+    public static long _15MIN = 900000;
+    public static long _10SEC = 10000;
+    public static long _30SEC = 30000;
 }

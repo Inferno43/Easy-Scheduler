@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * Created by saravana.subramanian on 11/30/16.
+ * Contains Utility functions used across the app
  */
 public class ViewUtils {
     private static ViewUtils ourInstance = new ViewUtils();
@@ -49,6 +50,12 @@ public class ViewUtils {
 
     }
 
+    /**
+     *
+     * @param date
+     * @param dateFormat
+     * @return
+     */
     public String getFormattedTime(Date date, DateFormat dateFormat){
 
         if(date!=null){

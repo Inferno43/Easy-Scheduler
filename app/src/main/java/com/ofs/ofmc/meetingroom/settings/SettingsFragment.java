@@ -18,7 +18,7 @@ import com.ofs.ofmc.meetingroom.toolbox.SharedPref;
 import java.util.HashMap;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A Settings fragment containing a settings view. implements ViewController contract
  */
 public class SettingsFragment extends BaseFragment implements ViewController.ClickListener{
 
@@ -41,6 +41,8 @@ public class SettingsFragment extends BaseFragment implements ViewController.Cli
         map = new HashMap<>();
         return settingsImplView.getRootView();
     }
+
+
 
     @Override
     public void setOnClickListener(View view) {

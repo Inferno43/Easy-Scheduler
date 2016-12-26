@@ -6,6 +6,8 @@ import com.ofs.ofmc.meetingroom.ViewMvc;
 
 /**
  * Created by saravana.subramanian on 12/23/16.
+ *
+ * Default View controller
  */
 
 public interface ViewController extends ViewMvc {

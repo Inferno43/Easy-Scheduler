@@ -20,6 +20,11 @@ import com.ofs.ofmc.meetingroom.callbacks.AbstractFragmentCallback;
 import com.ofs.ofmc.meetingroom.toolbox.Config;
 import com.ofs.ofmc.meetingroom.toolbox.NotificationUtils;
 
+/**
+ * Base Activity
+ * implements fragment and activity callback interface
+ */
+
 public class BaseActivity extends AppCompatActivity implements AbstractFragmentCallback,AbstractActivityCallback{
 
 

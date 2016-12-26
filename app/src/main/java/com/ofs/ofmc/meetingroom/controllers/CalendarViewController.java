@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Created by saravana.subramanian on 12/23/16.
+ * View Controller for calendar implemented layouts
  */
 
 public interface CalendarViewController extends ViewMvc {

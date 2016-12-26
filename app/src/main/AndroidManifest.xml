@@ -63,23 +63,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-
-        <receiver android:name=".toolbox.NotificationPublisher"/>
-        <receiver android:name=".toolbox.NotificationCancel" />
-
-        <receiver
-            android:name="service.AutoStart"
-            android:enabled="true"
-            android:exported="true" >
+        <receiver android:name=".notifications.AlarmReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.alarm.ACTION" />
             </intent-filter>
         </receiver>
-
-        <service android:name=".service.CustomService"
-            android:enabled="true" />
     </application>
 
 </manifest>

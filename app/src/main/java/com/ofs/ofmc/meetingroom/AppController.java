@@ -19,6 +19,8 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
  * Created by saravana.subramanian on 11/29/16.
+ *
+ * Singleton Application class for initializing DB and shared-preference
  */
 public class AppController extends Application {
 
@@ -57,6 +59,10 @@ public class AppController extends Application {
     }
 
 
+    /**
+     * initializing db with default meeting rooms
+     * @param realm
+     */
     void initMeetingRoomData(Realm realm){
 
         try{
@@ -83,6 +89,12 @@ public class AppController extends Application {
 
 
     }
+
+    /**
+     * initialize db with schedules for meeting room
+     * @param realm
+     */
+    //no need
     void initSampleSchedule(Realm realm){
 
         try{

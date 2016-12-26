@@ -32,6 +32,11 @@ public class SettingsImplView implements ViewController {
     private int flow;
     private boolean autoFill;
 
+    /**
+     * Controller for Settings Fragment(View -> Controller)
+     * @param inflater
+     * @param container
+     */
     public SettingsImplView(LayoutInflater inflater, ViewGroup container) {
 
         mRootView = inflater.inflate(R.layout.mvc_view_settings, container, false);
@@ -42,6 +47,7 @@ public class SettingsImplView implements ViewController {
         fillProfile = (CheckBox) mRootView.findViewById(R.id.autofillProfile);
         save = (Button) mRootView.findViewById(R.id.saveSettings);
         initView(context);
+
         listView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -54,7 +60,6 @@ public class SettingsImplView implements ViewController {
                 mClickListener.setOnClickListener(compoundButton);
             }
         });
-
         fillProfile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -70,6 +75,10 @@ public class SettingsImplView implements ViewController {
 
     }
 
+    /**
+     * init views inside layout
+     * @param context
+     */
     void initView(Context context){
         flow = sharedPref.getMap(context).get(SharedPref.PREFS_FLOW);
         autoFill = sharedPref.getBoolean(context,SharedPref.PREFS_AUTOFILL);
