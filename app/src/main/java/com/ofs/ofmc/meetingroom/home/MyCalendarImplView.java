@@ -10,6 +10,7 @@ import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.controllers.CalendarViewController;
 import com.ofs.ofmc.meetingroom.model.Profile;
 import com.ofs.ofmc.meetingroom.model.Schedule;
+import com.ofs.ofmc.meetingroom.toolbox.Utils;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class MyCalendarImplView implements CalendarViewController {
                     .contains("mBookieName",profile.getmEmployeename()).findAll();
             if(myScheduleList.size()>0){
                 for(int i=0;i<myScheduleList.size();i++){
-                    myScheduleDates.add(new Date(myScheduleList.get(i).getmDate()));
+                    myScheduleDates.add(Utils.toDate(myScheduleList.get(i).getmDate()));
                 }
             }else{
                 myScheduleDates.add(new Date());

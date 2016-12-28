@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="top|center"
     android:descendantFocusability="afterDescendants"
     android:layout_margin="@dimen/margin_8dp">
 
@@ -62,16 +62,14 @@
                         android:maxLines="1"
                         android:id="@+id/meetingType"/>
                 </android.support.design.widget.TextInputLayout>
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:orientation="horizontal">
                 <android.support.design.widget.TextInputLayout
-
-                    android:layout_weight=".9"
+                    android:layout_toStartOf="@+id/chooseMeetingRoom"
                     android:id="@+id/meeting_room_panel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
                         android:layout_width="match_parent"
@@ -81,18 +79,19 @@
                         android:id="@+id/roomName"/>
                 </android.support.design.widget.TextInputLayout>
                 <ImageView
-                    android:layout_weight=".1"
                     android:id="@+id/chooseMeetingRoom"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:maxHeight="72dp"
                     android:maxWidth="72dp"
                     android:focusable="true"
                     android:clickable="true"
                     android:focusableInTouchMode="true"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_arrow_down"
-                    android:layout_margin="@dimen/margin_8dp"/>
-                </LinearLayout>
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -160,12 +159,14 @@
                         android:id="@+id/cancel"
                         android:layout_width="wrap_content"
                         android:text="Cancel"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
                     <Button
                         android:id="@+id/bookRoom"
                         android:layout_width="wrap_content"
                         android:text="Book"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

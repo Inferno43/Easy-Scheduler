@@ -20,8 +20,10 @@ import com.ofs.ofmc.meetingroom.model.Schedule;
 import com.ofs.ofmc.meetingroom.notifications.AlarmReceiver;
 import com.ofs.ofmc.meetingroom.toolbox.Constants;
 import com.ofs.ofmc.meetingroom.toolbox.Logr;
+import com.ofs.ofmc.meetingroom.toolbox.SharedPref;
 import com.ofs.ofmc.meetingroom.toolbox.Utils;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,6 +39,9 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
     Calendar mcurrentTime = Calendar.getInstance();
     int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
     int minute = mcurrentTime.get(Calendar.MINUTE);
+    private SharedPref sharedPref;
+    private int notificationInterval;
+    private Context context;
 
     Realm realm;
 
@@ -48,10 +53,13 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         realm = Realm.getDefaultInstance();
+        context = getContext();
+        sharedPref = new SharedPref();
         Bundle fragmentArgs = getArguments();
         bookMeetingRoomView = new BookMeetingRoomImplView(inflater,container,fragmentArgs);
         bookMeetingRoomView.setListener(this);
-        getActivity().setTitle(Utils.formatDate(new Date(fragmentArgs.getString(Constants.EXTRA_DATE))));
+        getActivity().setTitle(Utils.formatDate(fragmentArgs.getString(Constants.EXTRA_DATE)));
+        notificationInterval = sharedPref.getInteger(context,SharedPref.PREFS_NOTIFICATION_INTERVAL);
 
         return bookMeetingRoomView.getRootView();
     }
@@ -88,7 +96,14 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
                             schedules = realm.where(Schedule.class)
                                     .contains("mMeetingRoomName", schedule.getmMeetingRoomName())
                                     .contains("mDate",schedule.getmDate())
-                                    .contains("mMeetingStartTime",schedule.getmMeetingStartTime()).findAll();
+                                    .contains("mMeetingStartTime",schedule.getmMeetingStartTime())
+
+                                    .findAll();
+//                            schedules.where().not()
+//                                    .between("mMeetingStartTime",Long.parseLong(schedule.getmMeetingStartTime()),
+//                                            Long.parseLong(schedules.get(0).getmMeetingEndTime())).or()
+//                                    .between("mMeetingEndTime",Long.parseLong(schedule.getmMeetingStartTime()),
+//                                            Long.parseLong(schedules.get(0).getmMeetingEndTime())).findAll();
                             if(schedules.size()<1){
                                 realm.executeTransactionAsync(new Realm.Transaction() {
                                     @Override
@@ -143,18 +158,23 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
         intent.setAction("com.alarm.ACTION");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, intent,0);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR,Utils.dateVariant(new Date(schedule.getmDate()),'Y'));Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'Y'));
-        calendar.set(Calendar.MONTH,Utils.dateVariant(new Date(schedule.getmDate()),'M')-1);Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'M'));
-        calendar.set(Calendar.DAY_OF_MONTH,Utils.dateVariant(new Date(schedule.getmDate()),'D'));Logr.d(""+Utils.dateVariant(new Date(schedule.getmDate()),'D'));
-        calendar.set(Calendar.HOUR,Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));
-        calendar.set(Calendar.MINUTE,Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
+        try{
+            calendar.set(Calendar.YEAR,Utils.dateVariant(schedule.getmDate(),'Y'));Logr.d(""+Utils.dateVariant(schedule.getmDate(),'Y'));
+            calendar.set(Calendar.MONTH,Utils.dateVariant(schedule.getmDate(),'M')-1);Logr.d(""+Utils.dateVariant(schedule.getmDate(),'M'));
+            calendar.set(Calendar.DAY_OF_MONTH,Utils.dateVariant(schedule.getmDate(),'D'));Logr.d(""+Utils.dateVariant(schedule.getmDate(),'D'));
+            calendar.set(Calendar.HOUR,Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'h'));
+            calendar.set(Calendar.MINUTE,Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));Logr.d(""+Utils.timeVariant(schedule.getmMeetingStartTime(),'m'));
+            calendar.set(Calendar.SECOND,0);
+            calendar.set(Calendar.MILLISECOND,0);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
         Logr.d(""+calendar.getTimeInMillis());
         AlarmManager alarm = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingIntent);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-Constants._30SEC,0, pendingIntent);
+        alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-Constants._30SEC, pendingIntent);
     }
     boolean isFieldsValid(Schedule schedule){
 

@@ -46,7 +46,12 @@ public class Constants {
     public static String EMPLOYEE_TEAM = "employeeTeam";
     public static String EMPLOYEE_PHASE = "employeePhase";
 
-    public static long _15MIN = 900000;
-    public static long _10SEC = 10000;
-    public static long _30SEC = 30000;
+
+    //Interval
+    public static int _5MIN  = 300000;
+    public static int _10MIN = 600000;
+    public static int _15MIN = 900000;
+    public static int _20MIN = 1200000;
+    public static int _10SEC = 10000;
+    public static int _30SEC = 30000;
 }

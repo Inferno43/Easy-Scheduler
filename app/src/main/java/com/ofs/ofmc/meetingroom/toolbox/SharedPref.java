@@ -26,6 +26,7 @@ public class SharedPref {
     public static final String PREFS_PASSWORD = "password";
     public static final String PREFS_FLOW = "flow";
     public static final String PREFS_AUTOFILL = "autofill";
+    public static final String PREFS_NOTIFICATION_INTERVAL = "notificationInterval";
 
 
     public static final String PREFS_FRESH_INSTALL = "freshInstall";
@@ -47,7 +48,8 @@ public class SharedPref {
         editor = settings.edit(); //2
 
         editor.putBoolean(PREFS_FRESH_INSTALL,true);
-        editor.putInt(PREFS_FLOW,PREFS_LIST); //3
+        editor.putInt(PREFS_FLOW,PREFS_LIST);
+        editor.putInt(PREFS_NOTIFICATION_INTERVAL,Constants._10MIN);
         editor.putBoolean(PREFS_AUTOFILL,false);
         editor.apply(); //4
     }
@@ -76,6 +78,8 @@ public class SharedPref {
 
         if(map.containsKey(PREFS_FLOW))
             editor.putInt(PREFS_FLOW, map.get(PREFS_FLOW));
+        if(map.containsKey(PREFS_NOTIFICATION_INTERVAL))
+            editor.putInt(PREFS_NOTIFICATION_INTERVAL, map.get(PREFS_NOTIFICATION_INTERVAL));
         //editor.putString(PREFS_KEY, String.valueOf(map.get("123"))); //3
 
         editor.commit(); //4
@@ -98,7 +102,7 @@ public class SharedPref {
         editor.commit(); //4
     }
 
-    public void save(Context context, boolean boole) {
+    public void save(Context context, String Key, boolean boole) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
 
@@ -106,7 +110,7 @@ public class SharedPref {
         settings = context.getSharedPreferences(PREFS_MEETING, Context.MODE_PRIVATE); //1
         editor = settings.edit(); //
 
-        editor.putBoolean(PREFS_AUTOFILL, boole);
+        editor.putBoolean(Key, boole);
 
         //editor.putString(PREFS_KEY, String.valueOf(map.get("123"))); //3
 

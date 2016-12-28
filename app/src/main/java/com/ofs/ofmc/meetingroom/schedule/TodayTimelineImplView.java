@@ -44,7 +44,7 @@ public class TodayTimelineImplView implements ViewController, WeekView.EventClic
 
     private Bundle fragmentArgs;
     private String selectedRoom;
-    private Date selectedDate;
+    private String selectedDate;
 
     TodayTimelineImplView(LayoutInflater layoutInflater, ViewGroup container,Bundle args){
 
@@ -80,17 +80,17 @@ public class TodayTimelineImplView implements ViewController, WeekView.EventClic
 
         try{
             if(fragmentArgs.getString(Constants.FROM).equalsIgnoreCase(Constants.MY_CALENDAR)){
-                selectedDate = new Date(fragmentArgs.getString(Constants.EXTRA_DATE));
+                selectedDate = fragmentArgs.getString(Constants.EXTRA_DATE);
                 schedules = realm.where(Schedule.class).contains("mDate",fragmentArgs.getString(Constants.EXTRA_DATE)).findAll();
             }else if(fragmentArgs.getString(Constants.FROM).equalsIgnoreCase(Constants.SHARED_CALENDAR)){
                 selectedRoom = fragmentArgs.getString(Constants.EXTRA_MEETING_ROOM_NAME);
-                selectedDate = new Date(fragmentArgs.getString(Constants.EXTRA_DATE));
+                selectedDate = fragmentArgs.getString(Constants.EXTRA_DATE);
                 schedules = realm.where(Schedule.class)
                         .contains("mDate",fragmentArgs.getString(Constants.EXTRA_DATE))
                         .contains("mMeetingRoomName",selectedRoom)
                         .findAll();
             }else if(fragmentArgs.getString(Constants.FROM).equalsIgnoreCase(Constants.PUBLIC_CALENDAR)){
-                selectedDate = new Date(fragmentArgs.getString(Constants.EXTRA_DATE));
+                selectedDate = fragmentArgs.getString(Constants.EXTRA_DATE);
                 Snackbar.make(mRootView,"No Schedule found",Snackbar.LENGTH_LONG).show();
             }
 

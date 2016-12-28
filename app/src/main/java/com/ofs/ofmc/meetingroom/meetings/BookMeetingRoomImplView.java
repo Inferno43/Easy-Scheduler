@@ -31,8 +31,10 @@ import com.ofs.ofmc.meetingroom.model.Schedule;
 import com.ofs.ofmc.meetingroom.toolbox.Constants;
 import com.ofs.ofmc.meetingroom.toolbox.Logr;
 import com.ofs.ofmc.meetingroom.toolbox.SharedPref;
+import com.ofs.ofmc.meetingroom.toolbox.Utils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -181,6 +183,10 @@ public class BookMeetingRoomImplView implements BookMeetingRoomView {
             @Override
             public void onClick(View view) {
 
+
+                //String startTime = setDate(fragmentArgs.getString(Constants.EXTRA_DATE),mStartTime.getText().toString());
+                //String endTime = setDate(fragmentArgs.getString(Constants.EXTRA_DATE),mEndTime.getText().toString());
+
                 schedule = new Schedule(lastRowId+1,mBookieName.getText().toString(),mBookieDesignation.getText().toString(),
                         mBookieTeam.getText().toString(),mMeetingType.getText().toString(),mIsMeetingTentative.isChecked(),
                         fragmentArgs.getString(Constants.EXTRA_DATE),mStartTime.getText().toString(),mEndTime.getText().toString(),
@@ -213,6 +219,19 @@ public class BookMeetingRoomImplView implements BookMeetingRoomView {
     }
 
 
+    String setDate(String date,String time){
+        String dateStr = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Utils.dateVariant(date,'Y'));Logr.d(""+Utils.dateVariant(date,'Y'));
+        calendar.set(Calendar.MONTH,Utils.dateVariant(date,'M')-1);Logr.d(""+Utils.dateVariant(date,'M'));
+        calendar.set(Calendar.DAY_OF_MONTH,Utils.dateVariant(date,'D'));Logr.d(""+Utils.dateVariant(date,'D'));
+        calendar.set(Calendar.HOUR,Utils.timeVariant(time,'h'));Logr.d(""+Utils.timeVariant(time,'h'));
+        calendar.set(Calendar.MINUTE,Utils.timeVariant(time,'m'));Logr.d(""+Utils.timeVariant(time,'m'));
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        dateStr = calendar.toString();
+        return dateStr;
+    }
 
     void autofillProfile(SharedPref sharedPref){
         boolean autofill = sharedPref.getBoolean(context,SharedPref.PREFS_AUTOFILL);

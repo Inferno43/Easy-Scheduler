@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import com.ofs.ofmc.meetingroom.BaseFragment;
 import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.controllers.ViewController;
+import com.ofs.ofmc.meetingroom.toolbox.Constants;
 import com.ofs.ofmc.meetingroom.toolbox.SharedPref;
 
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public class SettingsFragment extends BaseFragment implements ViewController.Cli
     ViewController settingsImplView;
     private HashMap<String,Integer> map;
     private boolean autofill;
+    private boolean interval;
+    private HashMap<String,Integer> intervalMap;
 
     public SettingsFragment() {
     }
@@ -37,6 +40,7 @@ public class SettingsFragment extends BaseFragment implements ViewController.Cli
         settingsImplView = new SettingsImplView(inflater,container);
         settingsImplView.setListener(this);
         sharedPref = new SharedPref();
+        intervalMap = new HashMap<>();
         context = getActivity();
         map = new HashMap<>();
         return settingsImplView.getRootView();
@@ -62,17 +66,38 @@ public class SettingsFragment extends BaseFragment implements ViewController.Cli
             case R.id.autofillProfile:
                 autofill = ((CheckBox)view).isChecked();
                 break;
+            case R.id.ten_min:
+                interval = ((RadioButton)view).isChecked();
+                if(interval)
+                    intervalMap.put(SharedPref.PREFS_NOTIFICATION_INTERVAL, Constants._10MIN);
+                break;
+            case R.id.fifteen_min:
+                interval = ((RadioButton)view).isChecked();
+                if(interval)
+                    intervalMap.put(SharedPref.PREFS_NOTIFICATION_INTERVAL, Constants._15MIN);
+                break;
+            case R.id.twenty_min:
+                interval = ((RadioButton)view).isChecked();
+                if(interval)
+                    intervalMap.put(SharedPref.PREFS_NOTIFICATION_INTERVAL, Constants._20MIN);
+                break;
             case R.id.saveSettings:
-                sharedPref.save(context,map);
-                sharedPref.save(context,autofill);
-                Snackbar.make(settingsImplView.getRootView(),"Saved your preference successfully",Snackbar.LENGTH_LONG).show();
-                Handler handler = new Handler();
-                handler.postDelayed (new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().finish();
-                    }
-                },1000);
+                try{
+                    sharedPref.save(context,map);
+                    sharedPref.save(context,SharedPref.PREFS_AUTOFILL,autofill);
+                    sharedPref.save(context,intervalMap);
+                    Snackbar.make(settingsImplView.getRootView(),"Saved your preference successfully",Snackbar.LENGTH_LONG).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed (new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().finish();
+                        }
+                    },1000);
+                }catch(Exception e){
+                    Snackbar.make(settingsImplView.getRootView(),"Cannot save your prefernece",Snackbar.LENGTH_LONG).show();
+                }
+
                 break;
 
         }

@@ -56,6 +56,37 @@
                 android:layout_height="wrap_content"
                 android:text="@string/autofill"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/card_title_3"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"/>
+
+            <RadioGroup
+                android:id="@+id/notificationInterval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ten_min"
+                    android:text="@string/ten_min"
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fifteen_min"
+                    android:text="@string/fifteen_min"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/twenty_min"
+                    android:text="@string/twenty_min"/>
+            </RadioGroup>
+
             <Button
                 android:id="@+id/saveSettings"
                 android:layout_width="wrap_content"

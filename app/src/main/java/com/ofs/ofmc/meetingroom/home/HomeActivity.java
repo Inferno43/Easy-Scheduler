@@ -136,9 +136,9 @@ public class HomeActivity extends BaseActivity {
                 case 0:
                     return "My \n Calendar";
                 case 1:
-                    return "Shared Calendar";
+                    return "Shared \n Calendar";
                 case 2:
-                    return "Public Calendar";
+                    return "Public \n Calendar";
             }
             return null;
         }

@@ -39,6 +39,10 @@
     <string name="show_timeline">Show Schedule as Timeline</string>
     <string name="card_title_2">Profile Info</string>
     <string name="autofill">Autofill My Profile Info</string>
+    <string name="card_title_3">Send me notification before</string>
+    <string name="ten_min">10 min</string>
+    <string name="fifteen_min">15 min</string>
+    <string name="twenty_min">20 min</string>
     <string name="save">Save</string>
 
 
