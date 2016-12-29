@@ -156,6 +156,7 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
          */
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.setAction("com.alarm.ACTION");
+        intent.putExtra(Constants.EXTRA,schedule);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, intent,0);
         Calendar calendar = Calendar.getInstance();
         try{
@@ -174,7 +175,7 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
         Logr.d(""+calendar.getTimeInMillis());
         AlarmManager alarm = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingIntent);
-        alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-Constants._30SEC, pendingIntent);
+        alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-Constants._10MIN, pendingIntent);
     }
     boolean isFieldsValid(Schedule schedule){
 

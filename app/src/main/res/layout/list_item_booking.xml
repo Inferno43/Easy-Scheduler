@@ -50,7 +50,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/meetingType"
             android:minEms="5"
-            />
+            android:maxLines="2"
+            android:maxLength="250"
+            android:ellipsize="none"/>
          <TextView
             android:text="Room name"
             android:layout_width="wrap_content"

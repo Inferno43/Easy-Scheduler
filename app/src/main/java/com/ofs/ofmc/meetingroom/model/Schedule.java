@@ -1,5 +1,8 @@
 package com.ofs.ofmc.meetingroom.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -8,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by saravana.subramanian on 12/8/16.
  */
 
-public class Schedule  extends RealmObject {
+public class Schedule  extends RealmObject implements Parcelable{
 
     @PrimaryKey
     private int id;
@@ -70,6 +73,50 @@ public class Schedule  extends RealmObject {
         this.mMeetingRoom = mMeetingRoom;
     }
 
+
+    protected Schedule(Parcel in) {
+        id = in.readInt();
+        mBookieName = in.readString();
+        mBookieDesignation = in.readString();
+        mBookieTeam = in.readString();
+        mMeetingType = in.readString();
+        mDate = in.readString();
+        mMeetingStartTime = in.readString();
+        mMeetingEndTime = in.readString();
+        mMeetingRoomName = in.readString();
+        istentative = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(mBookieName);
+        dest.writeString(mBookieDesignation);
+        dest.writeString(mBookieTeam);
+        dest.writeString(mMeetingType);
+        dest.writeString(mDate);
+        dest.writeString(mMeetingStartTime);
+        dest.writeString(mMeetingEndTime);
+        dest.writeString(mMeetingRoomName);
+        dest.writeByte((byte) (istentative ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {
+        @Override
+        public Schedule createFromParcel(Parcel in) {
+            return new Schedule(in);
+        }
+
+        @Override
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
 
     public int getId() {
         return id;

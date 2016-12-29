@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.login.LoginActivity;
+import com.ofs.ofmc.meetingroom.model.Schedule;
 
 /**
  * Created by saravana.subramanian on 12/26/16.
@@ -18,6 +19,8 @@ public class NotificationHandler {
     // Notification handler singleton
     private static NotificationHandler nHandler;
     private static NotificationManager mNotificationManager;
+
+
 
 
     private NotificationHandler () {}
@@ -42,7 +45,7 @@ public class NotificationHandler {
      * Shows a simple notification
      * @param context aplication context
      */
-    public void createSimpleNotification(Context context) {
+    public void createSimpleNotification(Context context, Schedule schedule) {
         // Creates an explicit intent for an Activity
         Intent resultIntent = new Intent(context, LoginActivity.class);
 
@@ -58,8 +61,9 @@ public class NotificationHandler {
         // Building the notification
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.logo) // notification icon
-                .setContentTitle("I'm a simple notification") // main title of the notification
-                .setContentText("I'm the text of the simple notification") // notification text
+                .setContentTitle("Hey "+schedule.getmBookieName()+"you have a schedule") // main title of the notification
+                .setContentText(schedule.getmMeetingType()+" @ "+
+                        schedule.getmMeetingRoomName()+" on "+schedule.getmMeetingStartTime()) // notification text
                 .setContentIntent(resultPending); // notification intent
 
         // mId allows you to update the notification later on.

@@ -9,6 +9,8 @@ import android.content.Intent;
 
 import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.home.HomeActivity;
+import com.ofs.ofmc.meetingroom.model.Schedule;
+import com.ofs.ofmc.meetingroom.toolbox.Constants;
 
 /**
  * Created by saravana.subramanian on 12/26/16.
@@ -16,15 +18,17 @@ import com.ofs.ofmc.meetingroom.home.HomeActivity;
 
 public class AlarmReceiver extends BroadcastReceiver {
     private final String ACTION = "com.alarm.ACTION";
+    private Schedule schedule;
     NotificationHandler nHandler;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         nHandler = NotificationHandler.getInstance(context);
         String action = intent.getAction();
+        schedule = intent.getParcelableExtra(Constants.EXTRA);
         if (ACTION.equals(action)) {
             //do what you want here
-            nHandler.createSimpleNotification(context);
+            nHandler.createSimpleNotification(context,schedule);
         }
     }
 
