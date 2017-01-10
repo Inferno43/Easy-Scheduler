@@ -3,10 +3,14 @@ package com.ofs.ofmc.meetingroom;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ofs.ofmc.meetingroom.callbacks.AbstractActivityCallback;
 import com.ofs.ofmc.meetingroom.callbacks.AbstractFragmentCallback;
 
@@ -18,11 +22,28 @@ public abstract class BaseFragment extends Fragment {
 
         private AbstractFragmentCallback mCallback;
         private AbstractActivityCallback mActivityCallback;
+        protected FirebaseAuth mAuth;
+        protected FirebaseAuth.AuthStateListener mAuthListener;
+        protected FirebaseUser user;
+        protected FirebaseDatabase firebaseDatabase;
 
         @Override
         public void onAttach(Activity activity) {
                 super.onAttach(activity);
                 setHasOptionsMenu(true);
+                mAuth = FirebaseAuth.getInstance();
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                mAuthListener = new FirebaseAuth.AuthStateListener() {
+                        @Override
+                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                user = firebaseAuth.getCurrentUser();
+                                if (user != null) {
+
+                                }else {
+
+                                }
+                        }
+                };
 
                 try {
                         mCallback = (AbstractFragmentCallback) activity;
@@ -56,6 +77,20 @@ public abstract class BaseFragment extends Fragment {
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
                 // TODO Add your menu entries here
                 super.onCreateOptionsMenu(menu, inflater);
+        }
+
+        @Override
+        public void onStart() {
+                super.onStart();
+                mAuth.addAuthStateListener(mAuthListener);
+        }
+
+        @Override
+        public void onStop() {
+                super.onStop();
+                if (mAuthListener != null) {
+                        mAuth.removeAuthStateListener(mAuthListener);
+                }
         }
 
 

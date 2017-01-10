@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -14,14 +15,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ofs.ofmc.meetingroom.BaseFragment;
 import com.ofs.ofmc.meetingroom.R;
 import com.ofs.ofmc.meetingroom.model.Schedule;
 import com.ofs.ofmc.meetingroom.notifications.AlarmReceiver;
+import com.ofs.ofmc.meetingroom.notifications.ParcelableUtils;
 import com.ofs.ofmc.meetingroom.toolbox.Constants;
 import com.ofs.ofmc.meetingroom.toolbox.Logr;
 import com.ofs.ofmc.meetingroom.toolbox.SharedPref;
 import com.ofs.ofmc.meetingroom.toolbox.Utils;
+
+import org.w3c.dom.Comment;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -49,6 +61,10 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
 
     RealmResults<Schedule> schedules;
 
+    private DatabaseReference mDatabase;
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +76,7 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
         bookMeetingRoomView.setListener(this);
         getActivity().setTitle(Utils.formatDate(fragmentArgs.getString(Constants.EXTRA_DATE)));
         notificationInterval = sharedPref.getInteger(context,SharedPref.PREFS_NOTIFICATION_INTERVAL);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         return bookMeetingRoomView.getRootView();
     }
 
@@ -109,6 +125,7 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
                                     @Override
                                     public void execute(Realm realm) {
                                         realm.insertOrUpdate(schedule);
+                                        writeNewSchedule(schedule);
                                     }
                                 }, new OnSuccess() {
                                     @Override
@@ -128,6 +145,9 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
                 });
 
     }
+
+
+
 
     void showPicker(final View view, final int viewId){
         TimePickerDialog mTimePicker;
@@ -157,7 +177,19 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.setAction("com.alarm.ACTION");
         intent.putExtra(Constants.EXTRA,schedule);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, intent,0);
+
+//        byte[] bytes = ParcelableUtils.marshall(schedule);
+//        intent.putExtra(Constants.EXTRA_DATA,bytes);
+//
+//        Bundle bundle = new Bundle();
+//        intent.putExtra(Constants.EXTRA_BOOKIE_NAME,schedule.getmBookieName());
+//        intent.putExtra(Constants.EXTRA_MEETING_ROOM_NAME,schedule.getmMeetingRoomName());
+//        intent.putExtra(Constants.EXTRA_MEETING_TIME,schedule.getmMeetingStartTime());
+//        intent.putExtra(Constants.EXTRA_MEETING_DESCRIPTION,schedule.getmMeetingType());
+//        intent.putExtra(Constants.EXTRA_BUNDLE,bundle);
+
+        final int _id = (int) System.currentTimeMillis();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), _id, intent,0);
         Calendar calendar = Calendar.getInstance();
         try{
             calendar.set(Calendar.YEAR,Utils.dateVariant(schedule.getmDate(),'Y'));Logr.d(""+Utils.dateVariant(schedule.getmDate(),'Y'));
@@ -217,6 +249,52 @@ public class BookMeetingRoomFragment extends BaseFragment implements BookMeeting
             return true;
         }
     }
+
+    private void writeNewSchedule(final Schedule schedule) {
+
+        final String uid = mAuth.getCurrentUser().getUid();
+
+
+        FirebaseDatabase.getInstance().getReference().child(uid)
+
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user information
+                        //Schedule newSchedule = dataSnapshot.getValue(Schedule.class);
+                        //Schedule newSchedule = new Schedule(schedule.getId(), authorName, commentText);
+
+                        // Push the comment, it will appear in the list
+                        mDatabase.child("schedules").push().setValue(schedule);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+//        try{
+//            mDatabase.push().child("schedule").child(uid).push().setValue(newSchedule);
+//            //mDatabase.child("schedule").child(uid).push().setValue(newSchedule);
+//
+//            mAuthListener = new FirebaseAuth.AuthStateListener() {
+//                @Override
+//                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//
+//                }
+//
+//            };
+//        }catch (Exception Fe){
+//            Fe.printStackTrace();
+//        }
+
+
+    }
+
+
 
 
 

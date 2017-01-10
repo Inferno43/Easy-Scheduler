@@ -1,5 +1,8 @@
 package com.ofs.ofmc.meetingroom.toolbox;
 
+import android.app.Activity;
+import android.os.Bundle;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +12,8 @@ import java.util.Date;
  * Contains Utility functions used across the app
  */
 public class ViewUtils {
+    private MyProgressDialog myProgressDialog;
+
     private static ViewUtils ourInstance = new ViewUtils();
 
     public static ViewUtils getInstance() {
@@ -80,4 +85,20 @@ public class ViewUtils {
         return String.valueOf(date);
 
     }
+
+
+
+    public void initProgress(Activity activity, String title){
+
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        myProgressDialog = new MyProgressDialog();
+        myProgressDialog.setArguments(args);
+        myProgressDialog.show(activity.getFragmentManager(),"dialog");
+    }
+    public void dismissProgress(){
+        if(myProgressDialog!=null && myProgressDialog.isInLayout())
+            myProgressDialog.dismiss();
+    }
+
 }

@@ -19,12 +19,14 @@ public class LoginImplView implements ViewController {
     private View mRootView;
     private ClickListener mClickListener;
     private Button mLogIn;
+    private Button mSignUp;
     private TextView mForgotPassword;
 
 
     LoginImplView(LayoutInflater inflater, ViewGroup container){
         mRootView = inflater.inflate(R.layout.mvc_view_login, container, false);
         mLogIn = (Button)mRootView.findViewById(R.id.submit);
+        mSignUp = (Button)mRootView.findViewById(R.id.signup);
         mForgotPassword = (TextView) mRootView.findViewById(R.id.forgotPassword);
 
         mLogIn.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +39,15 @@ public class LoginImplView implements ViewController {
         });
 
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mClickListener!=null){
+                    mClickListener.setOnClickListener(view);
+                }
+            }
+        });
+
+        mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mClickListener!=null){

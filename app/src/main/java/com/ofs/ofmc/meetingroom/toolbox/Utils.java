@@ -1,16 +1,24 @@
 package com.ofs.ofmc.meetingroom.toolbox;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.net.ParseException;
 
 import com.ofs.ofmc.meetingroom.exceptions.EmptyTextException;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.DataFormatException;
+
+import io.realm.Realm;
+import io.realm.internal.IOException;
 
 /**
  * Created by saravana.subramanian on 11/30/16.
@@ -27,7 +35,9 @@ public class Utils {
     private Utils() {
     }
 
-    Pattern validUser = Pattern.compile("^[A-Za-z_]\\w{7,29}$");
+    private static Pattern validUser = Pattern.compile("^[A-Za-z_]\\w{7,29}$");
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     /**
      *
@@ -37,7 +47,7 @@ public class Utils {
      * @return boolean
      * @throws EmptyTextException
      */
-    public boolean validUserName(String username) throws EmptyTextException{
+    public static boolean validUserName(String username) throws EmptyTextException{
 
         return validUser.matcher(username).matches();
     }
@@ -48,9 +58,20 @@ public class Utils {
      * @return boolean
      * @throws EmptyTextException
      */
-    public boolean validpassword(String password) throws EmptyTextException{
+    public static boolean validpassword(String password) throws EmptyTextException{
 
         return password.length()>0;
+    }
+
+
+    /**
+     * Validates the email string and throws exception if the string is empty
+     * @param emailStr
+     * @return
+     */
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
     }
 
     /**
@@ -80,7 +101,7 @@ public class Utils {
     /**
      * process the date string and returns date year or month or day based on variant param
      *
-     * @param date
+     * @param
      * @param variant
      * @return date variant
      */
@@ -163,5 +184,7 @@ public class Utils {
 
 
     }
+
+
 
 }

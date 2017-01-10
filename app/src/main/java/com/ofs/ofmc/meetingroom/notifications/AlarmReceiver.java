@@ -18,17 +18,17 @@ import com.ofs.ofmc.meetingroom.toolbox.Constants;
 
 public class AlarmReceiver extends BroadcastReceiver {
     private final String ACTION = "com.alarm.ACTION";
-    private Schedule schedule;
+
     NotificationHandler nHandler;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         nHandler = NotificationHandler.getInstance(context);
         String action = intent.getAction();
-        schedule = intent.getParcelableExtra(Constants.EXTRA);
+
         if (ACTION.equals(action)) {
             //do what you want here
-            nHandler.createSimpleNotification(context,schedule);
+            nHandler.createSimpleNotification(context,intent);
         }
     }
 

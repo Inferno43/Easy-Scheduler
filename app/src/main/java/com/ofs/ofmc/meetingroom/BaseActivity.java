@@ -14,9 +14,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ofs.ofmc.meetingroom.callbacks.AbstractActivityCallback;
 import com.ofs.ofmc.meetingroom.callbacks.AbstractFragmentCallback;
+import com.ofs.ofmc.meetingroom.notifications.AlarmReceiver;
 import com.ofs.ofmc.meetingroom.toolbox.Config;
 import com.ofs.ofmc.meetingroom.toolbox.NotificationUtils;
 
@@ -29,12 +31,13 @@ public class BaseActivity extends AppCompatActivity implements AbstractFragmentC
 
 
 
-
+    protected FirebaseDatabase firebaseDatabase;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private AlarmReceiver alarmReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        alarmReceiver = new AlarmReceiver();
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -52,7 +55,7 @@ public class BaseActivity extends AppCompatActivity implements AbstractFragmentC
                 }
             }
         };
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         // Show the default fragment if the application is not restored
         /*if (savedInstanceState == null) {
@@ -73,8 +76,15 @@ public class BaseActivity extends AppCompatActivity implements AbstractFragmentC
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION));
 
+        IntentFilter filter = new IntentFilter();
+        registerReceiver(alarmReceiver,filter);
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(alarmReceiver);
     }
 
     @Override
